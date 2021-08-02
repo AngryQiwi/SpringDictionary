@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DictEnglish implements Dictionary {
-    final String FILE_NAME = "src/main/resources/endict.txt";
-    final String REGULAR = "[a-zA-Z]{4}";
+    private final String FILE_NAME = "src/main/resources/endict.txt";
+    private final String REGULAR = "[a-zA-Z]{4}";
     private ArrayList<DictEntry> entries = new ArrayList<>();
     @Override
     public void readAllFromFile() throws IOException {

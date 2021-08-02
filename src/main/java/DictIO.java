@@ -1,4 +1,5 @@
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -7,11 +8,11 @@ import java.util.Scanner;
 
 public class DictIO {
     private Dictionary dictionary;
-    private  final Scanner scanner = new Scanner(System.in);
-    ApplicationContext context = new ClassPathXmlApplicationContext("dictionary-config.xml");
+    private final Scanner scanner = new Scanner(System.in);
+    private final ApplicationContext context = new AnnotationConfigApplicationContext(DictionaryConfig.class);
 
-     void greetings() throws IOException {
-        while(true) {
+    void greetings() throws IOException {
+        while (true) {
             System.out.println("Добро пожаловать в интергалактический словарь.");
             System.out.println("В данный момент доступно 2 языка, для выбора пункта введите его номер:");
             System.out.println("1. Интергаланглийский");
@@ -37,8 +38,8 @@ public class DictIO {
         }
     }
 
-     void chooseAction() throws IOException {
-        while(true) {
+    void chooseAction() throws IOException {
+        while (true) {
             System.out.println("Выберите действие:");
             System.out.println("1. Просмотр данных;");
             System.out.println("2. Найти значения по ключу;");
@@ -70,7 +71,7 @@ public class DictIO {
                     continue;
                 }
                 case "6": {
-                    if(changeDict()) return;
+                    if (changeDict()) return;
                     continue;
                 }
                 case "7": {
@@ -84,7 +85,7 @@ public class DictIO {
         }
     }
 
-     void show() {
+    void show() {
         System.out.println("===================================");
         System.out.println("===================================");
         for (DictEntry entry : dictionary.getEntries()) {
@@ -94,11 +95,11 @@ public class DictIO {
         System.out.println("===================================");
     }
 
-     void search() {
+    void search() {
         System.out.println("Введите слово:");
         String key = scanner.nextLine();
         ArrayList<DictEntry> foundEntries = dictionary.readByKey(key);
-        if(foundEntries==null) return;
+        if (foundEntries == null) return;
         System.out.println("===================================");
         System.out.println("===================================");
         for (DictEntry entry : foundEntries) {
@@ -108,7 +109,7 @@ public class DictIO {
         System.out.println("===================================");
     }
 
-     void add() {
+    void add() {
         DictEntry entry = new DictEntry();
         System.out.println("Введите слово:");
         entry.setKey(scanner.nextLine());
@@ -117,7 +118,7 @@ public class DictIO {
         dictionary.add(entry);
     }
 
-     void update() {
+    void update() {
         System.out.println("Введите слово:");
         String key = scanner.nextLine();
         ArrayList<DictEntry> candidatesForUpdate = dictionary.readByKey(key);
@@ -140,7 +141,7 @@ public class DictIO {
         dictionary.update(newValue, candidatesForUpdate, numberOfUpdated);
     }
 
-     void delete() {
+    void delete() {
         System.out.println("Введите слово:");
         String key = scanner.nextLine();
         ArrayList<DictEntry> candidatesForDelete = dictionary.readByKey(key);
@@ -160,13 +161,13 @@ public class DictIO {
         dictionary.deleteEntry(numberOfDeleted, candidatesForDelete);
     }
 
-     void exit() throws IOException {
+    void exit() throws IOException {
         System.out.println("Сохранить изменения?");
         System.out.println("1. Да");
         System.out.println("2. Нет");
         System.out.println("3. Отмена");
         String choice = scanner.nextLine();
-        while(true){
+        while (true) {
             switch (choice) {
                 case "1": {
                     dictionary.refreshFile();
@@ -178,19 +179,20 @@ public class DictIO {
                 case "3": {
                     return;
                 }
-                default:{
+                default: {
                     System.out.println("Введено неверное значение, введите значение в соответствии с выбранным пунктом");
                 }
             }
         }
     }
-     boolean changeDict() throws IOException {
+
+    boolean changeDict() throws IOException {
         System.out.println("Сохранить изменения?");
         System.out.println("1. Да");
         System.out.println("2. Нет");
         System.out.println("3. Отмена");
         String choice = scanner.nextLine();
-        while(true){
+        while (true) {
             switch (choice) {
                 case "1": {
                     dictionary.refreshFile();
@@ -202,7 +204,7 @@ public class DictIO {
                 case "3": {
                     return false;
                 }
-                default:{
+                default: {
                     System.out.println("Введено неверное значение, введите значение в соответствии с выбранным пунктом");
                 }
             }
