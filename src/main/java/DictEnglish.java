@@ -66,7 +66,7 @@ public class DictEnglish implements Dictionary {
             entries.sort(new DictComparator());
             return;
         }
-        System.out.println("Ввод не выполнен, некорректное значение");
+        System.out.println("Ввод не выполнен, некорректное слово");
     }
 
     @Override
